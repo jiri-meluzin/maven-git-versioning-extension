@@ -5,19 +5,30 @@
         <maven>3.6.4</maven>
     </prerequisites>
 
-    <groupId>me.qoomon</groupId>
+    <groupId>io.github.jiri-meluzin</groupId>
     <artifactId>maven-git-versioning-extension</artifactId>
-    <version>9.10.0</version>
+    <version>9.10.0-VFFix</version>
     <packaging>maven-plugin</packaging>
 
     <name>Maven Git Versioning Extension</name>
     <description>Maven Git Versioning Extension</description>
-    <url>https://github.com/qoomon/maven-git-versioning-extension</url>
+    <url>https://github.com/jiri-meluzin/maven-git-versioning-extension</url>
 
     <scm>
-        <url>https://github.com/qoomon/maven-git-versioning-extension.git</url>
-        <connection>scm:git:https://github.com/qoomon/maven-git-versioning-extension.git</connection>
+        <url>https://github.com/jiri-meluzin/maven-git-versioning-extension.git</url>
+        <connection>scm:git:https://github.com/jiri-meluzin/maven-git-versioning-extension.git</connection>
     </scm>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
 
     <licenses>
         <license>
@@ -215,37 +226,20 @@
                             </execution>
                         </executions>
                     </plugin>
-
+                    <!-- To sign the artifacts -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.2.4</version>
+                        <version>1.6</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
-                                <phase>package</phase>
+                                <phase>verify</phase>
                                 <goals>
                                     <goal>sign</goal>
                                 </goals>
-                                <configuration>
-                                    <gpgArguments>
-                                        <arg>--pinentry-mode</arg>
-                                        <arg>loopback</arg>
-                                    </gpgArguments>
-                                </configuration>
                             </execution>
                         </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.7.0</version>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <serverId>sonatype-nexus-staging</serverId>
-                            <nexusUrl>https://oss.sonatype.org</nexusUrl>
-                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>
